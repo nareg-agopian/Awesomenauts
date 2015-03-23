@@ -11,6 +11,7 @@ game.PlayerEntity = me.Entity.extend({
                 }
             }]);
         this.type = "PlayerEntity";
+        this.health = 20;
         this.body.setVelocity(5, 20);
         //Keeps track of which direction your character is going
         this.facing = "right";
@@ -86,6 +87,7 @@ game.PlayerEntity = me.Entity.extend({
     
     loseHealth: function(damage){
         this.health = this.health - damage;
+        console.log(this.health);
     },
     
     collideHandler: function(response) {
@@ -110,6 +112,26 @@ game.PlayerEntity = me.Entity.extend({
                 this.lastHit = this.now;
                 response.b.loseHealth();
             }
+        }else if(response.b.type==='EnemyCreep'){
+            var xdif = this.pos.x - response.b.pos.x;
+            var ydif = this.pos.y - response.b.pos.y;
+            
+            if (xdif>0){
+                this.pos.x = this.pos.x + 1;
+                if(this.facing==="left"){
+                    this.vel.x  = 0;
+                }
+            }else{
+                this.pos.x = this.pos.x - 1;
+                 if(this.facing==="right"){
+                    this.vel.x  = 0;
+                }
+            }          
+            if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000){
+                this.lastHit = this.now;
+                response.b.loseHealth(1);
+            }
+                
         }
     }
 });
@@ -228,9 +250,19 @@ game.EnemyCreep = me.Entity.extend({
         
         this.renderable.addAnimation("walk", [3, 4, 5], 80);
         this.renderable.setCurrentAnimation("walk");
+        
+    },
+    
+    loseHealth: function(damage){
+        this.health = this.health - damage;
     },
     
     update: function(delta){
+        
+        if(this.health <= 0){
+            me.game.world.removeChild(this);
+        }
+        
         this.now = new Date().getTime();
         
         
@@ -265,11 +297,12 @@ game.EnemyCreep = me.Entity.extend({
             
             this.attacking=true;
             //this.lastAttacking=this.now;
-            this.body.vel.x = 0;
-            //Keeps moving the creep to the right to maintain its position
+            
+            
             if(xdif>0){
-                console.log(xdif);
+                //Keeps moving the creep to the right to maintain its position
                 this.pos.x = this.pos.x +1;
+                this.body.vel.x = 0;
             }
             //checks that it has been at least 1 second since this creep hit a base
             if((this.now-this.lastHit >= 10000) && xdif>0){
