@@ -56,22 +56,9 @@ game.PlayerEntity = me.Entity.extend({
         
         this.dead = checkIfDead();
         
-        if(me.input.isKeyPressed("right")){
-            //adds to the position of my x by velocity defined above in
-            //setVelocity() and Mulltiplying it by me.timer.tick.
-            //me.timer.tick makes the movment look smoth
-            /*if you dont update it doesnt keeptrack in real world*/
-            this.body.vel.x += this.body.accel.x * me.timer.tick;
-            this.flipX(true);
-            this.facing = "right";
-        }else if(me.input.isKeyPressed("left")) {
-            this.facing = "left";
-            this.body.vel.x -= this.body.accel.x * me.timer.tick;
-            this.flipX(false);
-        } else {
-            this.body.vel.x = 0;
-        }
-
+        this.checkKeyPressesAndMove();
+        
+        
         if (me.input.isKeyPressed("jump")) {
             if (!this.body.jumping && !this.body.falling) {
                 this.body.jumping = true;
@@ -116,6 +103,42 @@ game.PlayerEntity = me.Entity.extend({
             return true;
         }
         return false;
+    },
+    
+    checkKeyPressesMove: function(){
+        if(me.input.isKeyPressed("right")){
+            this.moveRight();
+        }else if(me.input.isKeyPressed("left")) {
+           this.moveLeft();
+        } else {
+            this.body.vel.x = 0;
+        }
+        
+        if(me.input.isKeyPressed("jump") && !this.body.jumping && !this.body.falling){
+            this.jump();
+        }
+
+    },
+    
+    moveRight: function(){
+        //adds to the position of my x by velocity defined above in
+            //setVelocity() and Mulltiplying it by me.timer.tick.
+            //me.timer.tick makes the movment look smoth
+            /*if you dont update it doesnt keeptrack in real world*/
+            this.body.vel.x += this.body.accel.x * me.timer.tick;
+            this.flipX(true);
+            this.facing = "right";
+    },
+    
+    moveLeft: function(){
+         this.facing = "left";
+            this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            this.flipX(false);
+    },
+    
+    jump: function(){
+        this.body.jumping = true;
+            this.body.vel.y -= this.body.accel.y * me.timer.tick;
     },
     
     loseHealth: function(damage){
