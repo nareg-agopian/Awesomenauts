@@ -8,19 +8,25 @@ game.GameTimerManager = Object.extend({
     
     update: function(){
         this.now = new Date().getTime();
+        this.goldTimerCheck(this.now);
+        this.creepTimerCheck();
         
+        return true;
+    },
+    
+    goldTimerCheck: function(){
         if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)){
            game.data.gold += 1;
            console.log("Current gold: " + game.data.gold);
         }
-        
+    },
+    
+    creepTimerCheck: function(){
         if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)){
             this.lastCreep = this.now;
             var creepe = me.pool.pull("EnemyCreep", 1000, 0, {});
             me.game.world.addChild(creepe, 5);
         }
-        
-        return true;
     }
 });
 
@@ -34,7 +40,27 @@ game.HerodeathManager = Object.extend({
             me.game.world.removeChild(game.data.player);
             me.state.current().resetPlayer(10, 0); 
         }
+        
+        return true;
     }
+});
+
+game.ExperienceManager = Object.extend({
+    init: function(x, y, settings){
+        this.alwaysUpdate =true;
+        return true;
+    },
+    
+    update :function(){
+        if(game.data.win === true){
+            game.data.exp += 10;
+        }else if(game.data.win === false){
+            game.data.exp+= 1;
+        }
+        
+        return true;
+    }
+    
 });
 
 
