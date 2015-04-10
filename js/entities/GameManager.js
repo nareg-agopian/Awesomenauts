@@ -9,11 +9,6 @@ game.GameTimerManager = Object.extend({
     update: function(){
         this.now = new Date().getTime();
         
-        if(game.data.player.dead){
-            me.game.world.removeChild(game.data.player);
-            me.state.current().resetPlayer(10, 0); 
-        }
-        
         if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)){
            game.data.gold += 1;
            console.log("Current gold: " + game.data.gold);
@@ -31,11 +26,14 @@ game.GameTimerManager = Object.extend({
 
 game.HerodeathManager = Object.extend({
     init: function(x, y,settings){
-        
+        this.alwaysUpdate = true;
     },
     
     update: function(){
-        
+         if(game.data.player.dead){
+            me.game.world.removeChild(game.data.player);
+            me.state.current().resetPlayer(10, 0); 
+        }
     }
 });
 
