@@ -16,9 +16,9 @@ var game = {
 //                orcBaseHealth: 100,
 //                orcBaseSpeed: 3,
 //                orcBaseDefense: 0,
-                playerAttackTimer: 2000,
-                enemycreepAttackTimer: 1500,
-                playerMoveSpeed: 30,
+                playerAttackTimer: 1000,
+                enemycreepAttackTimer: 1000,
+                playerMoveSpeed: 5,
                 creepMoveSpeed: 10,
                 gameTimermanager: "",
                 heroDeathManger: "",
@@ -47,7 +47,12 @@ var game = {
 			me.plugin.register.defer(this, debugPanel, "debug");
 		});
 	}
-
+        
+        me.save.add({exp: 0, exp1: 0, exp2: 0, exp3: 0, exp4: 0});
+        
+        console.log(game.data.exp);
+        console.log(game.data.exp2);
+        
 	// Initialize the audio.
 	me.audio.init("mp3,ogg");
 
