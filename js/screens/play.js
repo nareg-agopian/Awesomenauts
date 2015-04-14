@@ -5,9 +5,7 @@ game.PlayScreen = me.ScreenObject.extend({
 	onResetEvent: function() {
 		// reset the score
 		game.data.score = 0;
-
-                me.levelDirector.loadLevel("level01");
-                
+                me.levelDirector.loadLevel("level01");                
                 this.resetPlayer(0, 420); 
                 
                 var gameTimerManager = me.pool.pull("GameTimerManager", 0, 0, {});
@@ -24,9 +22,6 @@ game.PlayScreen = me.ScreenObject.extend({
                 me.input.bindKey(me.input.KEY.SPACE, "jump");
                 me.input.bindKey(me.input.KEY.A, "attack");
 
-		// add our HUD to the game world
-		this.HUD = new game.HUD.Container();
-		me.game.world.addChild(this.HUD);
 	},
 
 
