@@ -32,9 +32,9 @@ game.SpendExp = me.ScreenObject.extend({
 
         this.handler = me.event.subscribe(me.event.KEYDOWN, function (action, keyCode, edge){
             if(action === "F1"){
-                if(game.data.exp >= ((game.data.exp1 + 1) + 10)){
+                if(game.data.exp >= exp1coast){
                     game.data.exp1 += 1;
-                    game.data.exp -= ((game.data.exp1 + 1) + 10);
+                    game.data.exp -= exp1coast;
                     me.state.change(me.state.PLAY);
                 }
             }else if(action === "F2"){
