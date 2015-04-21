@@ -45,6 +45,8 @@ game.SpendExp = me.ScreenObject.extend({
                 
             }else if(action === "F5"){
                 me.state.change(me.state.PLAY);
+            }else{
+                console.log ("not enough experience");
             }
         });
 
