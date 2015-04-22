@@ -31,7 +31,8 @@ var game = {
                 exp4: 0,
                 win: "",
                 pausePose: "",
-                buysgold: ""
+                buyscreen: "",
+                buytext: ""
 	},
 	
 	
