@@ -30,12 +30,12 @@
                     
                     <div class='password'>
                         <label for='password'>Password</label>
-                        <input type='text' name='password' id='password'>
+                        <input type='password' name='password' id='password'>
                     </div>
                     
                     <button type='button' id='register'>Register</button>
-                    <button type='button' id='load'>Register</button>
-                    <button type='button' id='mainmenu'>Register</button>
+                    <button type='button' id='load'>Load</button>
+                    <button type='button' id='mainmenu'>Main Menu</button>
                     
                 </form>
                 
@@ -119,6 +119,36 @@
                     }else{
                         alert(response);
                     }
+                    .fail(function(response){
+                        alert("Fail");
+                    });
+                });
+                
+                $("#load").binf("click", function)(){
+                    $.ajax({
+                        type:"post";
+                        url: "php/controller/login-user.php",
+                        data: {
+                            username: $('#username').val(),
+                            password: $('#password').val(),
+                        },
+                        dataType: "text"
+                    })
+                            .success(function(response)){
+                                if(response==="Invalid username and password");
+                                alert(response);
+                            }else{
+                                var data = jQuery.parseJSON(response);
+                                game.data.exp = data["exp"];
+                                game.data.exp1 = data["exp1"];
+                                game.data.exp2 = data["exp2"];
+                                game.data.exp3 = data["exp3"];
+                                game.data.exp4 = data["exp4"];
+                                
+                        me.state.change(me.sate.SPENDEXP);
+                        
+                    }
+                    })
                     .fail(function(response){
                         alert("Fail");
                     });

@@ -28,10 +28,10 @@ if ($query->num_rows == 1) {
         $_SESSION["name"] = $username;
         echo json_encode($array);
     } else {
-        echo "<p>Invaild username and password</P>";
+        echo "Invaild username and password";
     }
 } else {
-    echo "<p>Invaild username and password</P>";
+    echo "Invaild username and password</P>";
 }
 
 
