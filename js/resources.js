@@ -1,3 +1,4 @@
+//it checks that if this folders are true exisit
 game.resources = [
 
 	/* Graphics. 
